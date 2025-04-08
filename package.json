@@ -1,0 +1,19 @@
+{
+    "name": "@logicfenx/lada-674",
+    "version": "1.0.0",
+    "description": "Paquete NPM correspondiente a lada-674",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/logicfenx/lada-674.git"
+    },
+    "author": "Corpimex",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://inuchat.net/es/lada-674/"
+    },
+    "homepage": "https://inuchat.net/es/lada-674/"
+}

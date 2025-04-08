@@ -1,0 +1,37 @@
+name: Publicar en NPM
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Crear index.js dinámico
+        run: echo "console.log('Publicación automática desde GitHub Actions');" > index.js
+      - name: Crear .npmignore
+        run: echo '.github' > .npmignore
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org/'
+          always-auth: true
+      - name: Configurar autenticación en NPM
+        run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}' > ~/.npmrc
+      - name: Validar autenticación con scope
+        run: npm whoami --scope=${{ github.repository_owner }} || (echo '❌ Token de NPM no válido para este scope'; exit 1)
+      - name: Instalar dependencias
+        run: npm install
+      - name: Publicar en NPM
+        run: |
+          npm publish --access public --verbose || {
+            echo '❌ Error: Falló la publicación en NPM';
+            exit 1;
+          }
